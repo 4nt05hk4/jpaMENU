@@ -5,18 +5,25 @@ import java.util.Date;
 
 public class App {
     public static void main(String[] args) {
+        DishDAO dishDAO = new DishDAO();
 
-        CurrencyDAO currencyDAO = new CurrencyDAO();
+        DishUnit[] dishArray = Randomizer.getRandomDishArray(10);
+        dishDAO.saveDishesArray(dishArray);
 
-        Date today = new Date();
-        Date past = Date.from(ZonedDateTime.now().minusMonths(2).toInstant());
+        System.out.println("Dishes By Price Range------------------------------------------");
+        for (DishUnit dish : dishDAO.getDishesByPriceRange(40.00, 50.00)) {
+            System.out.println(dish);
+        }
 
-        String usdRequest = CurrencyAPI.buildRequestPeriod(past, today, "USD");
-        String usdJson = CurrencyAPI.getJsonFromAPI(usdRequest);
-        Currency[] arrayEuro = CurrencyAPI.getCurrenciesFromJSON(usdJson);
-        currencyDAO.saveCurrencyArray(arrayEuro);
+        System.out.println("Discount Dishes------------------------------------------");
+        for (DishUnit dish : dishDAO.getDiscountDishes()) {
+            System.out.println(dish);
+        }
 
-        System.out.println("Average value USD = " + currencyDAO.getAverageValueCurrency("USD"));
+        System.out.println("Dishes By WeightLimit------------------------------------------");
+        for (DishUnit dish : dishDAO.getDishesByWeightLimit(200.00)) {
+            System.out.println(dish);
+        }
     }
 }
 
