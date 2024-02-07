@@ -1,8 +1,5 @@
 package jpa1;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 public class App {
     public static void main(String[] args) {
         DishDAO dishDAO = new DishDAO();
